@@ -1,2 +1,2 @@
 # dtmoney
-A money management project
+A money management project created in ReactJS
