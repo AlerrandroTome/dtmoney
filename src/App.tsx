@@ -1,30 +1,16 @@
 import { GlobalStyle } from './styles/global';
 import { Header } from './components/header/index';
 import { Dashboard } from './components/dashboard';
-import { createServer } from 'miragejs';
 import { useState } from 'react';
 import { NewTransactionModal } from './components/newTransactionModal';
+import Modal from 'react-modal';
+import { TransactionsProvider } from './transactionsContext';
 
-createServer({
-  routes() {
-    this.namespace = 'api';
-
-    this.get('/transactions', () => {
-      return {
-        id: 1,
-        title: 'Transaction 1',
-        amount: 400,
-        type: 'deposit',
-        category: 'Food',
-        createdAt: new Date()
-      }
-    })
-  }
-})
+Modal.setAppElement('#root');
 
 export function App() {
 
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(true);
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
 
   function handleOpenNewTransactionModal() {
     setIsNewTransactionModalOpen(true);
@@ -34,7 +20,7 @@ export function App() {
     setIsNewTransactionModalOpen(false);
   }
   return (
-    <>
+    <TransactionsProvider>
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
       <Dashboard />
       <GlobalStyle />
@@ -42,6 +28,6 @@ export function App() {
         isOpen={isNewTransactionModalOpen}
         onRequestClose={handleCloseNewTransactionModal}
       />
-    </>
+    </TransactionsProvider>
   );
 }
