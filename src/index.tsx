@@ -5,7 +5,7 @@ import { createServer, Model } from 'miragejs';
 
 createServer({
   models: {
-    transaction: Model
+    transaction: Model,
   },
 
   seeds(server) {
@@ -38,7 +38,6 @@ createServer({
 
     this.post('/transactions', (schema, request) => {
       const data = JSON.parse(request.requestBody);
-
       return schema.create('transaction', data);
     });
   },
